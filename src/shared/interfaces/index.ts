@@ -1,2 +1,2 @@
-export * from './card.interfaces';
-export * from './list.interfaces';
+export * from './task.interfaces';
+export * from './column.interfaces';
