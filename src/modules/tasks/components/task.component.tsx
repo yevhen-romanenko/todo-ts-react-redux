@@ -1,8 +1,11 @@
 import React, { FC, useState } from 'react';
 import { Card, CardContent, Typography } from '@material-ui/core';
-import { TaskHeaderIsExpired, TaskDateLabels } from '../atoms';
+import {
+  TaskHeaderIsExpired,
+  TaskDateLabels,
+  TaskDateExpiredLabels,
+} from '../atoms';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { AddNewTaskButton } from '.';
 
 interface IProps {
   id: number;
@@ -27,9 +30,16 @@ export const TodoTask: FC<IProps> = ({
     <div>
       <Card style={styles.cardContainer}>
         <CardContent>
-          <TaskHeaderIsExpired isExpired={true} />
-          <div>
-            <Typography variant='h6' component='div'>
+          <TaskHeaderIsExpired isExpired={false} />
+          <div
+            style={{
+              marginBottom: 8,
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}>
+            <Typography variant='h5' component='div'>
               {title}
             </Typography>
             <div style={styles.deleteIcon}>
@@ -41,7 +51,7 @@ export const TodoTask: FC<IProps> = ({
           </div>
 
           <TaskDateLabels date={dateOfCreate} />
-          <TaskDateLabels date={expiredTaskDate} />
+          <TaskDateExpiredLabels date={expiredTaskDate} />
         </CardContent>
       </Card>
     </div>

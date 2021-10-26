@@ -6,7 +6,6 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { ColumnTitleIsEditing } from '../atoms';
 import { AddNewTaskButton, TodoTask } from '../../tasks/components';
 import { ITask } from '../../../shared/interfaces';
-import { AddNewColumnButton } from '.';
 
 interface IProps {
   columnID: number;
@@ -41,7 +40,13 @@ export const TodoColumn: FC<IProps> = ({
 
   return (
     <div style={styles.container}>
-      <div>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
         {canMoveLeft && (
           <div style={styles.listButtons} onClick={handleMoveLeft}>
             <ArrowBackIcon />
@@ -60,7 +65,13 @@ export const TodoColumn: FC<IProps> = ({
             <ArrowForwardIcon />
           </div>
         )}
-        <div onClick={handleDeleteColumn}>
+        <div
+          style={{
+            cursor: 'pointer',
+            position: 'relative',
+            right: '-30px',
+          }}
+          onClick={handleDeleteColumn}>
           <DeleteIcon></DeleteIcon>
         </div>
       </div>
