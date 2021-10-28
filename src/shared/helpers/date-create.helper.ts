@@ -1,4 +1,4 @@
-export const dataCreate = () => {
+export const dateCreate = () => {
   const today = new Date();
   const date =
     today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate();

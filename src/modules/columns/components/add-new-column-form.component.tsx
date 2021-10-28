@@ -3,15 +3,18 @@ import { Button, Card, Icon } from '@material-ui/core';
 import { IColumn } from '../../../shared/interfaces';
 import TextareaAutosize from 'react-textarea-autosize';
 import { DateInput } from 'semantic-ui-react-datetimeinput';
+import { addColumn } from '../../../store/columns';
+import { Dispatch } from 'redux';
 // import { dateParse } from '../../../shared/helpers';
 
 interface IProps {
-  // id: number;
-  // listID: number;
   title: string;
-  //   description: string;
   column: IColumn;
 }
+
+// const addNewColumn = () => async (dispatch: Dispatch) => {
+//   setTimeout(() => dispatch(addColumn()), 1000);
+// };
 
 export const AddNewColumnForm: FC<IProps> = ({ title, column }) => {
   const titlePlaceholder = 'Enter column title...';
