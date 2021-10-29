@@ -2,9 +2,9 @@ import React, { FC, useState } from 'react';
 import { Button, Card, Icon } from '@material-ui/core';
 import { IColumn } from '../../../shared/interfaces';
 import TextareaAutosize from 'react-textarea-autosize';
-import { DateInput } from 'semantic-ui-react-datetimeinput';
 import { addColumn } from '../../../store/columns';
 import { Dispatch } from 'redux';
+import { useDispatch } from 'react-redux';
 // import { dateParse } from '../../../shared/helpers';
 
 interface IProps {
@@ -12,14 +12,14 @@ interface IProps {
   column: IColumn;
 }
 
-// const addNewColumn = () => async (dispatch: Dispatch) => {
-//   setTimeout(() => dispatch(addColumn()), 1000);
+// const addNewColumn = (column: IColumn) => async (dispatch: Dispatch) => {
+//   setTimeout(() => dispatch(addColumn(column) as any), 1000);
 // };
 
 export const AddNewColumnForm: FC<IProps> = ({ title, column }) => {
   const titlePlaceholder = 'Enter column title...';
   const buttonTitle = 'Add column';
-
+  const dispatch = useDispatch();
   const [columnTitle, setColumnTitle] = useState(title);
 
   const [isOpen, setIsOpen] = useState(false);
@@ -35,7 +35,8 @@ export const AddNewColumnForm: FC<IProps> = ({ title, column }) => {
     if (title) {
       setColumnTitle('');
       setIsOpen(false);
-      //   dispatch(addList(title));
+
+      // dispatch(addColumn(column) as any);
     }
 
     return;

@@ -1,48 +1,61 @@
 import { DispatchType, ColumnAction } from '.';
+import { fetchColumsReq, deleteColumnsReq } from '../../api/columns';
 import { IColumn } from '../../shared/interfaces';
 // import { ITask } from '../../shared/interfaces';
 import * as ActionTypes from './types';
 
-export function addColumn(column: IColumn) {
-  const action: ColumnAction = {
-    type: ActionTypes.ADD_COLUMN,
-    column,
-  };
+export function setAllColumns() {
+  return async (dispatch: DispatchType) => {
+    try {
+      const response = await fetchColumsReq();
 
-  simulateHttpRequest(action);
+      dispatch({
+        type: ActionTypes.SET_COLUMNS,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 }
 
-export function deleteColumn(column: IColumn) {
-  const action: ColumnAction = {
-    type: ActionTypes.DELETE_COLUMN,
-    column,
+export function deleteColumn(id: number) {
+  return async (dispatch: DispatchType) => {
+    try {
+      dispatch({
+        type: ActionTypes.DELETE_COLUMN,
+        payload: id,
+      });
+      const response = await deleteColumnsReq(id);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
-
-  simulateHttpRequest(action);
 }
 
-export function editColumnTitle(column: IColumn) {
+export function addColumn(title: string) {
+  return (dispatch: DispatchType) => {
+    const action: ColumnAction = {
+      type: ActionTypes.ADD_COLUMN,
+      payload: title,
+    };
+  };
+}
+
+export function editColumnTitle(columnId: number, newTitle: string) {
   const action: ColumnAction = {
     type: ActionTypes.EDIT_COLUMN_TITLE,
-    column,
+    payload: { columnId, newTitle },
   };
 
-  simulateHttpRequest(action);
+  // simulateHttpRequest(action);
 }
 
-// export const moveList = (id, direction) => {
-//     return (dispatch) => {
-//       dispatch({
-//         type: MOVE_LIST,
-//         payload: { id, direction },
-//       });
-//     };
+// export function simulateHttpRequest(action: ColumnAction) {
+//   return (dispatch: DispatchType) => {
+//     setTimeout(() => {
+//       dispatch(action);
+//     }, 0);
 //   };
-
-export function simulateHttpRequest(action: ColumnAction) {
-  return (dispatch: DispatchType) => {
-    setTimeout(() => {
-      dispatch(action);
-    }, 500);
-  };
-}
+// }

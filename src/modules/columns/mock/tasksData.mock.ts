@@ -52,7 +52,7 @@ export const tasksData: IColumn[] = [
   },
   {
     title: 'Third Column',
-    id: 1,
+    id: 2,
     tasks: [
       {
         id: 0,

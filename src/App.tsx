@@ -1,13 +1,19 @@
-import React from 'react';
+import React, { FC } from 'react';
+import { useSelector, connect } from 'react-redux';
 
 import './App.css';
 import { AddNewColumnButton, TodoColumn } from './modules/columns/components';
 import { tasksData } from './modules/columns/mock';
 import { IColumn } from './shared/interfaces';
+// import { getColumns } from './store/columns';
 
-const columns: IColumn[] = tasksData;
+interface IColumnProps {
+  columns: IColumn[];
+}
 
-const App = () => {
+export const App: FC<IColumnProps> = (props) => {
+  const { columns } = props;
+
   return (
     <div className='App'>
       <h2 style={{ width: '100%', textAlign: 'center' }}>TODO APP</h2>
@@ -27,11 +33,10 @@ const App = () => {
   );
 };
 
-// const styles = {
-//   listsContainer: {
-//     display: 'flex',
-//     flexDirection: 'row',
-//   },
-// };
+const mapStateToProps = (state: any) => ({
+  columns: state.columns.columnItems,
+});
 
-export default App;
+export default connect(mapStateToProps)(App);
+
+// export default App;

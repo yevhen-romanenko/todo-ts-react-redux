@@ -5,9 +5,13 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { ColumnTitleIsEditing } from '../atoms';
 import { AddNewTaskButton, TodoTask } from '../../tasks/components';
+import { deleteColumn } from '../../../store/columns';
 import { ITask } from '../../../shared/interfaces';
+// import { IColumn } from '../../../shared/interfaces';
+// import { Dispatch } from 'redux';
+import { useDispatch, connect } from 'react-redux';
 
-interface IProps {
+interface ITodoColumnProps {
   columnID: number;
   title: string;
   tasks: ITask[];
@@ -15,20 +19,21 @@ interface IProps {
   canMoveRight: boolean;
 }
 
-export const TodoColumn: FC<IProps> = ({
+export const TodoColumn: FC<ITodoColumnProps> = ({
   columnID,
   title,
   tasks,
   canMoveLeft,
   canMoveRight,
 }) => {
+  const dispatch = useDispatch();
   // const [isEditing, setIsEditing] = useState(false);
   const isEditing = false;
   //   const [cardTitle, setCardTitle] = useState(title);
   //   const [cardDesc, setCardDesc] = useState(description);
 
-  const handleDeleteColumn = (e: any) => {
-    // dispatch(deleteList(listID));
+  const handleDeleteColumn = () => {
+    dispatch(deleteColumn(columnID));
   };
   const handleMoveLeft = (direction: any) => {
     // dispatch(moveList(listID, DIRECTION_LEFT));
@@ -115,3 +120,9 @@ const styles = {
     right: '-30px',
   },
 };
+
+const mapStateToProps = (state: any) => ({
+  columns: state.columns.columns,
+});
+
+export default connect(mapStateToProps)(TodoColumn);
