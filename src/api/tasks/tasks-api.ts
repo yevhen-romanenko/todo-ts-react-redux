@@ -1,5 +1,5 @@
-import { IColumn } from '../../shared/interfaces';
-import { AxiosResponse } from 'axios';
+// import { IColumn } from '../../shared/interfaces';
+// import { AxiosResponse } from 'axios';
 
 const apiStore: any = {
   columns: [
@@ -85,19 +85,22 @@ const apiStore: any = {
 };
 
 export const deleteTaskReq = (columnID: number, id: number) => {
-  const newStore = apiStore.map((column: any) => {
+  const newStore = apiStore.columns.map((column: any) => {
     if (column.id !== columnID) {
       return column;
     }
+
     const newTasks = column.tasks.filter((task: any) => task.id !== id);
     return { ...column, tasks: newTasks };
   });
+
+  console.log('API delete task req', newStore);
 
   return {
     statusText: 'Ok',
     status: 200,
     headers: {},
     config: {} as any,
-    data: newStore.columns,
+    data: newStore,
   };
 };

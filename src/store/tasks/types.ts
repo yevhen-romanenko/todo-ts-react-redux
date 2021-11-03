@@ -7,12 +7,12 @@ export const EDIT_TASK = 'EDIT_TASK';
 // export type TTaskActions = ADD_TASK | DELETE_TASK | EDIT_TASK
 
 export type TaskState = {
-  tasks: ITask[];
+  taskItems: ITask[];
 };
 
 export type TaskAction = {
   type: string;
-  task: ITask;
+  payload: any;
 };
 
 export type DispatchType = (args: TaskAction) => TaskAction;

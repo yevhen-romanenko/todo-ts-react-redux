@@ -1,6 +1,11 @@
-import { DispatchType, ColumnAction } from '.';
-import { fetchColumsReq, deleteColumnsReq } from '../../api/columns';
-import { IColumn } from '../../shared/interfaces';
+import { DispatchType } from '.';
+import {
+  fetchColumsReq,
+  deleteColumnsReq,
+  updateColumnReq,
+  addColumnReq,
+} from '../../api/columns';
+// import { IColumn } from '../../shared/interfaces';
 // import { ITask } from '../../shared/interfaces';
 import * as ActionTypes from './types';
 
@@ -8,7 +13,7 @@ export function setAllColumns() {
   return async (dispatch: DispatchType) => {
     try {
       const response = await fetchColumsReq();
-
+      // console.log('setAllColumns action', response.data);
       dispatch({
         type: ActionTypes.SET_COLUMNS,
         payload: response.data,
@@ -27,7 +32,7 @@ export function deleteColumn(id: number) {
         payload: id,
       });
       const response = await deleteColumnsReq(id);
-      console.log(response.data);
+      console.log('DeleteColumnReqfromAction', response);
     } catch (error) {
       console.log(error);
     }
@@ -35,21 +40,35 @@ export function deleteColumn(id: number) {
 }
 
 export function addColumn(title: string) {
-  return (dispatch: DispatchType) => {
-    const action: ColumnAction = {
-      type: ActionTypes.ADD_COLUMN,
-      payload: title,
-    };
+  return async (dispatch: DispatchType) => {
+    try {
+      dispatch({
+        type: ActionTypes.ADD_COLUMN,
+        payload: title,
+      });
+
+      const response = await addColumnReq(title);
+      console.log('add data from api', response.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 }
 
 export function editColumnTitle(columnId: number, newTitle: string) {
-  const action: ColumnAction = {
-    type: ActionTypes.EDIT_COLUMN_TITLE,
-    payload: { columnId, newTitle },
-  };
+  return async (dispatch: DispatchType) => {
+    try {
+      dispatch({
+        type: ActionTypes.EDIT_COLUMN_TITLE,
+        payload: { columnId, newTitle },
+      });
 
-  // simulateHttpRequest(action);
+      const response = await updateColumnReq(columnId, newTitle);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 }
 
 // export function simulateHttpRequest(action: ColumnAction) {

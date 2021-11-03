@@ -1,6 +1,7 @@
 import React, { FC, useState } from 'react';
 import { Icon } from '@material-ui/core';
 import { IColumn } from '../../../shared/interfaces';
+import { AddNewColumnForm } from '.';
 
 interface IProps {
   // title: string;
@@ -17,18 +18,27 @@ export const AddNewColumnButton: FC = () => {
   const buttonTextBackground = 'rgba(0,0,0,.15)';
 
   return (
-    <div
-      onClick={() => {
-        setIsOpen(true);
-      }}
-      style={{
-        ...styles.openFormButtonGroup,
-        opacity: buttonTextOpacity,
-        color: buttonTextColor,
-        backgroundColor: buttonTextBackground,
-      }}>
-      <Icon>add</Icon>
-      <p>{buttonText}</p>
+    <div>
+      {' '}
+      {!isOpen ? (
+        <div
+          onClick={() => {
+            setIsOpen(true);
+          }}
+          style={{
+            ...styles.openFormButtonGroup,
+            opacity: buttonTextOpacity,
+            color: buttonTextColor,
+            backgroundColor: buttonTextBackground,
+          }}>
+          <div>
+            <Icon>add</Icon>
+            <p>{buttonText}</p>
+          </div>
+        </div>
+      ) : (
+        <AddNewColumnForm isOpen={isOpen}></AddNewColumnForm>
+      )}
     </div>
   );
 };

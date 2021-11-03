@@ -6,6 +6,9 @@ import {
   TaskDateExpiredLabels,
 } from '../atoms';
 import DeleteIcon from '@mui/icons-material/Delete';
+// import { deleteTaskReq } from '../../../api/tasks';
+import { connect, useDispatch } from 'react-redux';
+import { deleteTask } from '../../../store/tasks';
 
 interface IProps {
   id: number;
@@ -17,6 +20,8 @@ interface IProps {
 }
 
 export const TodoTask: FC<IProps> = ({
+  id,
+  columnID,
   title,
   description,
   dateOfCreate,
@@ -25,6 +30,13 @@ export const TodoTask: FC<IProps> = ({
   const [isEditing, setIsEditing] = useState(false);
   //   const [cardTitle, setCardTitle] = useState(title);
   //   const [cardDesc, setCardDesc] = useState(description);
+
+  const dispatch = useDispatch();
+
+  const handleDeleteTask = () => {
+    dispatch(deleteTask(columnID, id) as any);
+    console.log('deleted task witd id', id, 'from column #', columnID);
+  };
 
   return (
     <div>
@@ -42,7 +54,7 @@ export const TodoTask: FC<IProps> = ({
             <Typography variant='h5' component='div'>
               {title}
             </Typography>
-            <div style={styles.deleteIcon}>
+            <div onClick={handleDeleteTask} style={styles.deleteIcon}>
               <DeleteIcon></DeleteIcon>
             </div>
           </div>
@@ -81,3 +93,5 @@ const styles = {
     color: 'white',
   },
 };
+
+export default connect()(TodoTask);

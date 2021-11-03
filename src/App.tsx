@@ -1,18 +1,58 @@
-import React, { FC } from 'react';
-import { useSelector, connect } from 'react-redux';
+import React, { FC, useEffect, useState } from 'react';
+import {
+  useSelector,
+  connect,
+  ReactReduxContext,
+  useDispatch,
+} from 'react-redux';
 
 import './App.css';
 import { AddNewColumnButton, TodoColumn } from './modules/columns/components';
-import { tasksData } from './modules/columns/mock';
+// import { tasksData } from './modules/columns/mock';
 import { IColumn } from './shared/interfaces';
-// import { getColumns } from './store/columns';
+import { setAllColumns } from './store/columns';
+import store from './store';
 
 interface IColumnProps {
   columns: IColumn[];
 }
 
 export const App: FC<IColumnProps> = (props) => {
+  useEffect(() => {
+    console.log('render App!');
+    // store.subscribe(() => {
+    //   console.log(store.getState());
+    // });
+
+    store.dispatch(setAllColumns() as any);
+
+    return () => console.log('unmounting App...');
+  }, []);
+
+  // const [initialState, setInitialState] = useState([]);
+
+  // useEffect(() => {
+  //   async function fetchColumns() {
+  //     const response = await
+  //     // const fetchedColumns = await response.json(response);
+  //     console.log('fetchedColumns', response);
+  //     setInitialState(response.data);
+  //   }
+  //   fetchColumns();
+  // }, []);
+
+  // store.subscribe(() => {
+  //   console.log(store.getState());
+  // });
+
+  // console.log('Initial state: ', store.getState());
+
+  // const unsubscribe = store.subscribe(() =>
+  //   console.log('State after dispatch: ', store.getState())
+  // );
+
   const { columns } = props;
+  // console.log(columns);
 
   return (
     <div className='App'>
@@ -35,6 +75,7 @@ export const App: FC<IColumnProps> = (props) => {
 
 const mapStateToProps = (state: any) => ({
   columns: state.columns.columnItems,
+  tasks: state.columns.columnItems.tasks,
 });
 
 export default connect(mapStateToProps)(App);

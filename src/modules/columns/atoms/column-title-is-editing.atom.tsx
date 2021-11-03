@@ -11,6 +11,15 @@ interface IProps {
 export const ColumnTitleIsEditing: FC<IProps> = ({ title, columnID }) => {
   const [isEditing, setIsEditing] = useState(false);
 
-  if (!isEditing) return <h4 onClick={() => setIsEditing(true)}>{title}</h4>;
-  return <EditTitleColumnForm columnID={columnID} title={title} />;
+  // const [newTitle, setNewTitle] = useState(title);
+
+  if (isEditing)
+    return (
+      <EditTitleColumnForm
+        columnID={columnID}
+        title={title}
+        isEdit={isEditing}
+      />
+    );
+  return <h4 onClick={() => setIsEditing(true)}>{title}</h4>;
 };

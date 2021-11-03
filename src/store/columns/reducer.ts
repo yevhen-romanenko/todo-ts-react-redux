@@ -1,8 +1,8 @@
 import * as ActionTypes from './types';
 import { ColumnState, ColumnAction } from '.';
-import { IColumn } from '../../shared/interfaces';
-import { v4 as uuidv4 } from 'uuid';
-import { convertGuidToInt } from '../../shared/helpers';
+// import { IColumn } from '../../shared/interfaces';
+// import { v4 as uuidv4 } from 'uuid';
+// import { convertGuidToInt } from '../../shared/helpers';
 // import { tasksData } from '../../modules/columns/mock';
 
 const initialState: ColumnState = {
@@ -21,15 +21,9 @@ export const columnsReducer = (
       };
 
     case ActionTypes.ADD_COLUMN:
-      const newColumn: IColumn = {
-        title: action.payload,
-        tasks: [],
-        id: convertGuidToInt(uuidv4()),
-      };
-
       return {
         ...state,
-        newColumn,
+        // columnItems: action.payload,
       };
 
     case ActionTypes.DELETE_COLUMN:
@@ -38,6 +32,23 @@ export const columnsReducer = (
         (columnItem) => columnItem.id !== id
       );
       state.columnItems = newColumnsState;
+      return {
+        ...state,
+      };
+
+    case ActionTypes.EDIT_COLUMN_TITLE:
+      const { columnId, newTitle } = action.payload;
+      const newStateColumn = state.columnItems.find(
+        (columnItem) => columnItem.id === columnId
+      );
+      console.log(
+        'reducers state  =',
+        newStateColumn,
+        'new title = ',
+        newTitle
+      );
+      // newStateColumn.title = newTitle;
+      // state.columnItems = newColumnsState;
       return {
         ...state,
       };

@@ -6,13 +6,13 @@
 
 import * as ActionTypes from './types';
 import { TaskState, TaskAction } from '.';
-import { ITask } from '../../shared/interfaces';
-import { v4 as uuidv4 } from 'uuid';
-import { dateCreate } from '../../shared/helpers';
-import { convertGuidToInt } from '../../shared/helpers';
+// import { ITask } from '../../shared/interfaces';
+// import { v4 as uuidv4 } from 'uuid';
+// import { dateCreate } from '../../shared/helpers';
+// import { convertGuidToInt } from '../../shared/helpers';
 
 const initialState: TaskState = {
-  tasks: [],
+  taskItems: [],
 };
 
 export const tasksReducer = (
@@ -21,17 +21,13 @@ export const tasksReducer = (
 ) => {
   switch (action.type) {
     case ActionTypes.ADD_TASK:
-      const newTask: ITask = {
-        title: action.task.title,
-        description: action.task.description,
-        id: convertGuidToInt(uuidv4()),
-        dateOfCreate: dateCreate(),
-        expiredDate: action.task.expiredDate,
-      };
-
       return {
         ...state,
-        newTask,
+      };
+
+    case ActionTypes.DELETE_TASK:
+      return {
+        ...state,
       };
 
     default:

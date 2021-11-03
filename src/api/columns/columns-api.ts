@@ -1,5 +1,7 @@
-import { IColumn } from '../../shared/interfaces';
-import { AxiosResponse } from 'axios';
+// import { IColumn } from '../../shared/interfaces';
+// import { AxiosResponse } from 'axios';
+import { v4 as uuidv4 } from 'uuid';
+import { convertGuidToInt } from '../../shared/helpers';
 
 const apiStore: any = {
   columns: [
@@ -85,6 +87,7 @@ const apiStore: any = {
 };
 
 export const fetchColumsReq = () => {
+  console.log('fetch all data request from api');
   return {
     statusText: 'Ok',
     status: 200,
@@ -95,25 +98,47 @@ export const fetchColumsReq = () => {
 };
 
 export const deleteColumnsReq = (id: number) => {
-  const newApistore = apiStore.filter((column: any) => column.id !== id);
-  // console.log(newApistore);
+  const newApistore = apiStore.columns.filter(
+    (column: any) => column.id !== id
+  );
+  console.log('delete Column req', newApistore);
   return {
     statusText: 'Ok',
     status: 200,
     headers: {},
     config: {} as any,
-    data: newApistore.columns,
+    data: newApistore,
   };
 };
 
-// const updateColumnReq = (id: number, data: any) => {
-//   apiStore.find((column: any) => column.id === id);
+export const addColumnReq = (data: any) => {
+  const newColumn = {
+    title: data,
+    tasks: [],
+    id: convertGuidToInt(uuidv4()),
+  };
+  apiStore.columns.push(newColumn);
 
-//   return {
-//     statusText: 'Ok',
-//     status: 200,
-//     headers: {},
-//     config: {} as any,
-//     data: apiStore.columns,
-//   };
-// };
+  return {
+    statusText: 'Ok',
+    status: 200,
+    headers: {},
+    config: {} as any,
+    data: apiStore.columns,
+  };
+};
+
+export const updateColumnReq = (id: number, data: any) => {
+  const updatedColumn = apiStore.columns.find(
+    (column: any) => column.id === id
+  );
+  updatedColumn.title = data;
+
+  return {
+    statusText: 'Ok',
+    status: 200,
+    headers: {},
+    config: {} as any,
+    data: apiStore.columns,
+  };
+};

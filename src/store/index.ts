@@ -4,13 +4,6 @@ import thunk from 'redux-thunk';
 import { tasksReducer } from './tasks';
 import { columnsReducer, setAllColumns } from './columns';
 
-// import { IColumn, ITask } from '../shared/interfaces';
-
-// export interface IAppState  {
-//   columnsState: IColumn[]
-//   tasksState: ITask[]
-// }
-
 const rootReducer = combineReducers<{}>({
   tasks: tasksReducer,
   columns: columnsReducer,

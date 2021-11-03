@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 
 import DeleteIcon from '@mui/icons-material/Delete';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -27,13 +27,14 @@ export const TodoColumn: FC<ITodoColumnProps> = ({
   canMoveRight,
 }) => {
   const dispatch = useDispatch();
-  // const [isEditing, setIsEditing] = useState(false);
-  const isEditing = false;
+
+  // const isEditing = false;
+  const [isEditing, setIsEditing] = useState(false);
   //   const [cardTitle, setCardTitle] = useState(title);
   //   const [cardDesc, setCardDesc] = useState(description);
 
   const handleDeleteColumn = () => {
-    dispatch(deleteColumn(columnID));
+    dispatch(deleteColumn(columnID) as any);
   };
   const handleMoveLeft = (direction: any) => {
     // dispatch(moveList(listID, DIRECTION_LEFT));
@@ -42,6 +43,8 @@ export const TodoColumn: FC<ITodoColumnProps> = ({
   const handleMoveRight = (direction: any) => {
     // dispatch(moveList(listID, DIRECTION_RIGHT));
   };
+
+  // console.log('tasks =>', tasks);
 
   return (
     <div style={styles.container}>
@@ -121,8 +124,8 @@ const styles = {
   },
 };
 
-const mapStateToProps = (state: any) => ({
-  columns: state.columns.columns,
-});
+// const mapStateToProps = (state: any) => ({
+//   tasks: state.tasks.taskItems,
+// });
 
-export default connect(mapStateToProps)(TodoColumn);
+export default connect()(TodoColumn);
