@@ -1,42 +1,40 @@
-// export interface ITasksState {}
-
-// const initialState: ICardsState {
-
-// }
-
 import * as ActionTypes from './types';
-import { TaskState, TaskAction } from '.';
-// import { ITask } from '../../shared/interfaces';
-// import { v4 as uuidv4 } from 'uuid';
-// import { dateCreate } from '../../shared/helpers';
-// import { convertGuidToInt } from '../../shared/helpers';
+import { TaskActionTypes } from '.';
+import { ITask } from '../../shared/interfaces';
 
-const initialState: TaskState = {
-    taskItems: [],
-};
+const initialState: Array<ITask> = [];
 
-export const tasksReducer = (state: TaskState = initialState, action: TaskAction) => {
-    switch (action.type) {
-        case ActionTypes.SET_TASKS:
-            return {
-                ...state,
-                taskItems: action.payload,
-            };
-        case ActionTypes.ADD_TASK:
-            return {
-                ...state,
-            };
+export const tasksReducer = (state = initialState, action: TaskActionTypes) => {
+  switch (action.type) {
+    case ActionTypes.SET_TASKS:
+      return action.tasks;
 
-        case ActionTypes.DELETE_TASK:
-            console.log('del task reducer', action.payload);
-            const id = action.payload;
-            const newTasksState = state.taskItems.filter((taskItem) => taskItem.id !== id);
-            state.taskItems = newTasksState;
-            return {
-                ...state,
-            };
+    case ActionTypes.ADD_TASK:
+      return [action.task, ...state];
 
-        default:
-            return state;
-    }
+    case ActionTypes.EDIT_TASK:
+      return [...state, action.task];
+
+    case ActionTypes.DELETE_TASK:
+      //   console.log('del task reducer', action.payload);
+      const id = action.task.id;
+
+      const newTasksState = state.filter((taskItem) => taskItem.id !== id);
+      state = newTasksState;
+      return {
+        ...state,
+      };
+
+    case ActionTypes.SET_FETCHING_TASKS:
+      return { ...state, isFetching: true };
+
+    case ActionTypes.SET_FETCH_TASKS_ERROR:
+      return { ...state, isFetching: false, error: action.error };
+
+    case ActionTypes.SET_FETCH_TASKS_SUCCESS:
+      return { ...state, isFetching: false, error: null };
+
+    default:
+      return state;
+  }
 };

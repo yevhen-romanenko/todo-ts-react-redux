@@ -1,51 +1,47 @@
 import * as ActionTypes from './types';
-import { ColumnState, ColumnAction } from '.';
-// import { IColumn } from '../../shared/interfaces';
+// import { ColumnState, ColumnAction } from '.';
+import { IColumn } from '../../shared/interfaces';
+import { ColumnActionTypes } from '.';
 // import { v4 as uuidv4 } from 'uuid';
 // import { convertGuidToInt } from '../../shared/helpers';
 // import { tasksData } from '../../modules/columns/mock';
 
-const initialState: ColumnState = {
-    columnItems: [],
-};
+const initialState: Array<IColumn> = [];
 
-export const columnsReducer = (state: ColumnState = initialState, action: ColumnAction) => {
-    switch (action.type) {
-        case ActionTypes.SET_COLUMNS:
-            return {
-                ...state,
-                columnItems: action.payload,
-            };
+export const columnsReducer = (
+  state = initialState,
+  action: ColumnActionTypes
+) => {
+  switch (action.type) {
+    case ActionTypes.SET_COLUMNS:
+      return action.columns;
 
-        case ActionTypes.ADD_COLUMN:
-            console.log('add column reducer', action.payload);
-            return {
-                ...state,
-                // columnItems: [action.payload],
-            };
+    case ActionTypes.ADD_COLUMN:
+      return [action.column, ...state];
 
-        case ActionTypes.DELETE_COLUMN:
-            console.log('del column reducer', action.payload);
-            // const id = action.payload;
-            // const newColumnsState = state.columnItems.filter((columnItem) => columnItem.id !== id);
-            // state.columnItems = newColumnsState;
-            return {
-                ...state,
-                // columnItems: action.payload,
-            };
+    case ActionTypes.EDIT_COLUMN:
+      return [...state, action.column];
 
-        case ActionTypes.EDIT_COLUMN_TITLE:
-            console.log('edit column reducer', action.payload);
-            // const { columnId, newTitle } = action.payload;
-            // const newStateColumn = state.columnItems.find((columnItem) => columnItem.id === columnId);
-            // console.log('reducers state  =', newStateColumn, 'new title = ', newTitle);
-            // newStateColumn.title = newTitle;
-            // state.columnItems = newColumnsState;
-            return {
-                ...state,
-            };
+    case ActionTypes.DELETE_COLUMN:
+      // console.log('del column reducer', action.payload);
+      const id = action.column.id;
+      const newColumnsState = state.filter(
+        (columnItem) => columnItem.id !== id
+      );
+      state = newColumnsState;
+      return {
+        ...state,
+      };
+    case ActionTypes.SET_FETCHING_COLUMNS:
+      return { ...state, isFetching: true };
 
-        default:
-            return state;
-    }
+    case ActionTypes.SET_FETCH_COLUMNS_ERROR:
+      return { ...state, isFetching: false, error: action.error };
+
+    case ActionTypes.SET_FETCH_COLUMNS_SUCCESS:
+      return { ...state, isFetching: false, error: null };
+
+    default:
+      return state;
+  }
 };

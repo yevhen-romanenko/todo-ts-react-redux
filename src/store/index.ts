@@ -4,13 +4,14 @@ import thunk from 'redux-thunk';
 import { tasksReducer } from './tasks';
 import { columnsReducer } from './columns';
 
-const rootReducer = combineReducers<{}>({
-    tasks: tasksReducer,
-    columns: columnsReducer,
+const rootReducer = combineReducers({
+  tasks: tasksReducer,
+  columns: columnsReducer,
 });
 
-const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
-
-// store.dispatch(setAllColumns() as any);
+const store = createStore(
+  rootReducer,
+  composeWithDevTools(applyMiddleware(thunk))
+);
 
 export default store;

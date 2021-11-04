@@ -35,7 +35,7 @@ export const AddNewColumnForm: FC<IProps> = ({ isOpen }) => {
     if (columnTitle) {
       setIsFormOpen(false);
 
-      dispatch(addColumn(columnTitle) as any);
+      // dispatch(addColumn(columnTitle) as any);
 
       setColumnTitle('');
     }

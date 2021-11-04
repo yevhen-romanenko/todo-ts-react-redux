@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { editColumnTitle } from '../../../store/columns';
+// import { editColumnTitle } from '../../../store/columns';
 
 interface IProps {
   columnID: number;
@@ -24,7 +24,7 @@ export const EditTitleColumnForm: FC<IProps> = ({
 
   const keyPressHandler = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter') {
-      dispatch(editColumnTitle(columnID, newColumnTitle));
+      // dispatch(editColumnTitle(columnID, newColumnTitle));
       setIsEditing(false);
     }
   };
