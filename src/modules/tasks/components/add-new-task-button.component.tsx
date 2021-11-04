@@ -1,42 +1,55 @@
 import React, { FC, useState } from 'react';
 import { Icon } from '@material-ui/core';
-import { IColumn } from '../../../shared/interfaces';
+// import { IColumn } from '../../../shared/interfaces';
+import { AddNewTaskForm } from '.';
 
-interface IProps {}
+interface IProps {
+    columnId: number;
+}
 
-export const AddNewTaskButton: FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
+export const AddNewTaskButton: FC<IProps> = ({ columnId }) => {
+    const [isOpen, setIsOpen] = useState(false);
 
-  const buttonText = 'Add new task';
-  const buttonTextOpacity = 0.5;
-  const buttonTextColor = 'inherit';
-  const buttonTextBackground = 'inherit';
+    const buttonText = 'Add new task';
+    const buttonTextOpacity = 0.5;
+    const buttonTextColor = 'inherit';
+    const buttonTextBackground = 'inherit';
 
-  return (
-    <div
-      onClick={() => {
-        setIsOpen(true);
-      }}
-      style={{
-        ...styles.openFormButtonGroup,
-        opacity: buttonTextOpacity,
-        color: buttonTextColor,
-        backgroundColor: buttonTextBackground,
-      }}>
-      <Icon>add</Icon>
-      <p>{buttonText}</p>
-    </div>
-  );
+    return (
+        <div>
+            {' '}
+            {!isOpen ? (
+                <div
+                    onClick={() => {
+                        setIsOpen(true);
+                    }}
+                    style={{
+                        ...styles.openFormButtonGroup,
+                        opacity: buttonTextOpacity,
+                        color: buttonTextColor,
+                        backgroundColor: buttonTextBackground,
+                    }}
+                >
+                    <div>
+                        <Icon>add</Icon>
+                        <p>{buttonText}</p>
+                    </div>
+                </div>
+            ) : (
+                <AddNewTaskForm columnId={columnId}></AddNewTaskForm>
+            )}
+        </div>
+    );
 };
 
 const styles = {
-  openFormButtonGroup: {
-    display: 'flex',
-    alignItems: 'center',
-    cursor: 'pointer',
-    borderRadius: 3,
-    height: 36,
-    width: 272,
-    paddingLeft: 10,
-  },
+    openFormButtonGroup: {
+        display: 'flex',
+        alignItems: 'center',
+        cursor: 'pointer',
+        borderRadius: 3,
+        height: 36,
+        width: 272,
+        paddingLeft: 10,
+    },
 };

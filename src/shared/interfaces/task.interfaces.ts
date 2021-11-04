@@ -1,7 +1,8 @@
 export interface ITask {
-  id: number;
-  title: string;
-  description: string;
-  dateOfCreate: string;
-  expiredDate: string;
+    id: number;
+    columnId: number;
+    title: string;
+    description: string;
+    dateOfCreate: string;
+    expiredDate: string;
 }
