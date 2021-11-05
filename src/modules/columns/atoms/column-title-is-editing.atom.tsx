@@ -4,22 +4,23 @@ import { EditTitleColumnForm } from '../smart-components';
 
 interface IProps {
   columnID: number;
-  isEditing: boolean;
   title: string;
 }
 
 export const ColumnTitleIsEditing: FC<IProps> = ({ title, columnID }) => {
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditingTitle, setIsEditingTitle] = useState(false);
 
-  // const [newTitle, setNewTitle] = useState(title);
+  const toggleEditColumnTitle = (): void => {
+    setIsEditingTitle(!isEditingTitle);
+  };
 
-  if (isEditing)
+  if (isEditingTitle)
     return (
       <EditTitleColumnForm
         columnID={columnID}
         title={title}
-        isEdit={isEditing}
+        toggleisEdit={toggleEditColumnTitle}
       />
     );
-  return <h4 onClick={() => setIsEditing(true)}>{title}</h4>;
+  return <h4 onClick={toggleEditColumnTitle}>{title}</h4>;
 };

@@ -1,22 +1,19 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC } from 'react';
 
 import DeleteIcon from '@mui/icons-material/Delete';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { ColumnTitleIsEditing } from '../atoms';
 import { AddNewTaskButton, TodoTask } from '../../tasks/components';
-// import {
-//   changeColumnPosition,
-//   deleteColumn,
-//   setAllColumns,
-// } from '../../../store/columns';
+import { deleteColumn, fetchColumnsThunk } from '../../../store/columns';
 import { ITask } from '../../../shared/interfaces';
-// import { IColumn } from '../../../shared/interfaces';
-// import { Dispatch } from 'redux';
+
 import { useDispatch, connect } from 'react-redux';
-// import { setAllTasks } from '../../../store/tasks';
+
 import store from '../../../store';
 import { DIRECTION_LEFT, DIRECTION_RIGHT } from '../../../shared/consts';
+import { fetchTasksThunk } from '../../../store/tasks';
+import { useEffectOnce } from '../../../hooks/useEffectOnce';
 
 interface ITodoColumnProps {
   columnID: number;
@@ -35,13 +32,13 @@ export const TodoColumn: FC<ITodoColumnProps> = ({
 }) => {
   const dispatch = useDispatch();
 
-  // const isEditing = false;
-  const [isEditing, setIsEditing] = useState(false);
-  //   const [cardTitle, setCardTitle] = useState(title);
-  //   const [cardDesc, setCardDesc] = useState(description);
+  useEffectOnce(() => {
+    store.dispatch(fetchColumnsThunk() as any);
+    store.dispatch(fetchTasksThunk() as any);
+  });
 
   const handleDeleteColumn = () => {
-    // dispatch(deleteColumn(columnID) as any);
+    dispatch(deleteColumn(columnID));
   };
   const handleMoveLeft = (direction: any) => {
     // dispatch(changeColumnPosition(columnID, DIRECTION_LEFT));
@@ -67,11 +64,7 @@ export const TodoColumn: FC<ITodoColumnProps> = ({
         )}
         <div>
           {' '}
-          <ColumnTitleIsEditing
-            columnID={columnID}
-            title={title}
-            isEditing={isEditing}
-          />
+          <ColumnTitleIsEditing columnID={columnID} title={title} />
         </div>
         {canMoveRight && (
           <div style={styles.listButtons} onClick={handleMoveRight}>

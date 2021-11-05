@@ -8,12 +8,6 @@ export const SET_FETCHING_TASKS = 'SET_FETCHING_TASKS';
 export const SET_FETCH_TASKS_SUCCESS = 'SET_FETCH_TASKS_SUCCESS';
 export const SET_FETCH_TASKS_ERROR = 'SET_FETCH_TASKS_ERROR';
 
-// export type TTaskActions = ADD_TASK | DELETE_TASK | EDIT_TASK
-
-// export type TaskState = {
-//   taskItems: ITask[];
-// };
-
 export type TaskApiState = {
   isFetching: boolean;
   error: string | null;
@@ -31,7 +25,7 @@ export type EditTaskAction = {
 
 export type DeleteTaskAction = {
   type: typeof DELETE_TASK;
-  task: ITask;
+  id: number;
 };
 
 export type SetTasksAction = {
@@ -60,10 +54,5 @@ export type TaskActionTypes =
   | SetFetchingTasksAction
   | SetFetchTasksSuccessAction
   | SetFetchTasksErrorAction;
-
-// export type TaskAction = {
-//   type: string;
-//   payload: any;
-// };
 
 export type DispatchType = (args: TaskActionTypes) => TaskActionTypes;

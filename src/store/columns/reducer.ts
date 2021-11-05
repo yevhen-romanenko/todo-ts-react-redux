@@ -17,21 +17,18 @@ export const columnsReducer = (
       return action.columns;
 
     case ActionTypes.ADD_COLUMN:
-      return [action.column, ...state];
+      return [...state];
 
     case ActionTypes.EDIT_COLUMN:
       return [...state, action.column];
 
     case ActionTypes.DELETE_COLUMN:
-      // console.log('del column reducer', action.payload);
-      const id = action.column.id;
+      const id = action.id;
       const newColumnsState = state.filter(
         (columnItem) => columnItem.id !== id
       );
       state = newColumnsState;
-      return {
-        ...state,
-      };
+      return [...state];
     case ActionTypes.SET_FETCHING_COLUMNS:
       return { ...state, isFetching: true };
 

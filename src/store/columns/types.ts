@@ -34,7 +34,7 @@ export type EditColumnAction = {
 
 export type DeleteColumnAction = {
   type: typeof DELETE_COLUMN;
-  column: IColumn;
+  id: number;
 };
 
 export type SetColumnsAction = {

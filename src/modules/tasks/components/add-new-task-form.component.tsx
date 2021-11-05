@@ -1,17 +1,17 @@
 import React, { FC, useState } from 'react';
 import { Button, Card, Icon } from '@material-ui/core';
-import { IColumn } from '../../../shared/interfaces';
 import TextareaAutosize from 'react-textarea-autosize';
 import { DateInput } from 'semantic-ui-react-datetimeinput';
 import { useDispatch } from 'react-redux';
-import { addTask } from '../../../store/tasks';
+import { addTasksThunk } from '../../../store/tasks';
 import { dateParse } from '../../../shared/helpers';
 
 interface IProps {
   columnId: number;
+  toggleAddTaskForm: () => void;
 }
 
-export const AddNewTaskForm: FC<IProps> = ({ columnId }) => {
+export const AddNewTaskForm: FC<IProps> = ({ columnId, toggleAddTaskForm }) => {
   const dispatch = useDispatch();
 
   const titlePlaceholder = 'Enter a title for this task...';
@@ -22,8 +22,6 @@ export const AddNewTaskForm: FC<IProps> = ({ columnId }) => {
   const [taskDesc, setTaskDesc] = useState('');
   const [taskExpDate, setTaskExpDate] = useState(new Date());
 
-  const [isOpen, setIsOpen] = useState(false);
-
   const handleInputTitleChange = (e: any) => {
     setTaskTitle(e.target.value);
   };
@@ -32,8 +30,8 @@ export const AddNewTaskForm: FC<IProps> = ({ columnId }) => {
     setTaskDesc(e.target.value);
   };
 
-  const changeDateValue = (newDateValue: any) => {
-    // setCardExpDate({ newDateValue });
+  const handleChangeDateValue = (newDateValue: Date) => {
+    setTaskExpDate(newDateValue);
   };
 
   const handleAddTask = () => {
@@ -41,9 +39,11 @@ export const AddNewTaskForm: FC<IProps> = ({ columnId }) => {
       setTaskTitle('');
       setTaskDesc('');
       setTaskExpDate(new Date());
-      setIsOpen(false);
+      toggleAddTaskForm();
 
-      // dispatch(addTask(columnId, taskTitle, taskDesc, dateParse(taskExpDate)));
+      dispatch(
+        addTasksThunk(columnId, taskTitle, taskDesc, dateParse(taskExpDate))
+      );
     }
 
     return;
@@ -68,7 +68,6 @@ export const AddNewTaskForm: FC<IProps> = ({ columnId }) => {
         <div>
           <TextareaAutosize
             placeholder={descPlaceholder}
-            onBlur={() => setIsOpen(false)}
             value={taskDesc}
             onChange={handleInputDescriptionChange}
             style={{
@@ -86,13 +85,11 @@ export const AddNewTaskForm: FC<IProps> = ({ columnId }) => {
             DeadLine date:
           </p>
           <DateInput
+            onDateValueChange={handleChangeDateValue}
             buttonPlacement='buttonsInside'
             size='large'
             showTooltips={false}
-            dateValue={taskExpDate}
-            onDateValueChange={() => {
-              new Date(0);
-            }}></DateInput>
+            dateValue={taskExpDate}></DateInput>
         </div>
       </Card>
       <div style={styles.formButtonGroup}>
@@ -103,7 +100,7 @@ export const AddNewTaskForm: FC<IProps> = ({ columnId }) => {
           {buttonTitle}
           {''}
         </Button>
-        <div onClick={() => setIsOpen(false)}>
+        <div onClick={toggleAddTaskForm}>
           <Icon style={{ marginLeft: 8, cursor: 'pointer' }}>close</Icon>
         </div>
       </div>

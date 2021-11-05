@@ -6,5 +6,5 @@ interface IProps {
 }
 
 export const TaskDateExpiredLabels: FC<IProps> = ({ date }) => {
-  return <Typography color='primary'>Expired date:{date}</Typography>;
+  return <Typography color='secondary'>Expired date:{date}</Typography>;
 };

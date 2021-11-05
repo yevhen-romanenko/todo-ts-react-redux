@@ -1,13 +1,9 @@
-// import {
-//   fetchColumsReq,
-//   deleteColumnsReq,
-//   updateColumnReq,
-//   addColumnReq,
-//   swapColumnPositionReq,
-// } from '../../api/columns';
-
 import { IColumn } from '../../shared/interfaces';
-import { fetchColumsReq } from '../../api/columns';
+import {
+  addColumnReq,
+  fetchColumsReq,
+  updateColumnReq,
+} from '../../api/columns';
 
 import { Dispatch } from 'redux';
 import {
@@ -31,9 +27,9 @@ export const editColumn = (column: IColumn): ColumnActionTypes => ({
   column,
 });
 
-export const deleteColumn = (column: IColumn): ColumnActionTypes => ({
+export const deleteColumn = (columnID: number): ColumnActionTypes => ({
   type: DELETE_COLUMN,
-  column,
+  id: columnID,
 });
 
 export const setColumns = (columns: IColumn[]): ColumnActionTypes => ({
@@ -64,64 +60,28 @@ export const fetchColumnsThunk =
     }
   };
 
-// const justSetAllColumns = (columns: any) => ({
-//   type: ActionTypes.SET_COLUMNS,
-//   payload: columns,
-// });
+export const addColumnsThunk =
+  (title: string) => async (dispatch: Dispatch<ColumnActionTypes>) => {
+    try {
+      const response = await addColumnReq(title);
 
-// const deletingColumnThunk = (id:number) => {
-//   (dispatch, getState) => {
-//     dispatch()
-//   }
-// }
+      dispatch(addColumn(response.data));
+    } catch (err: any) {
+      dispatch(setFetchColumnsError(err.message));
+    }
+  };
 
-// export function setAllColumns() {
-//   return async (dispatch: DispatchType) => {
-//     try {
-//       const response = await fetchColumsReq();
-//       console.log('setAllColumns action', response.data);
-//       dispatch({
-//         type: ActionTypes.SET_COLUMNS,
-//         payload: response.data,
-//       });
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
-// }
+export const editColumnsTitleThunk =
+  (columnId: number, newTitle: string) =>
+  async (dispatch: Dispatch<ColumnActionTypes>) => {
+    try {
+      const response = await updateColumnReq(columnId, newTitle);
 
-// export function deleteColumn(id: number) {
-//   return async (dispatch: DispatchType) => {
-//     try {
-//       dispatch({
-//         type: ActionTypes.DELETE_COLUMN,
-//         payload: id,
-//       });
-//       const response = await deleteColumnsReq(id);
-
-//       console.log('DeleteColumnReqfromAction', response.data);
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
-// }
-
-// export function addColumn(title: string) {
-//   return async (dispatch: DispatchType) => {
-//     try {
-//       dispatch({
-//         type: ActionTypes.ADD_COLUMN,
-//         payload: title,
-//       });
-//       const response = addColumnReq(title);
-
-//       console.log('AddColumnReqfromAction', response);
-//       fetchColumsReq();
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
-// }
+      dispatch(editColumn(response.data));
+    } catch (err: any) {
+      dispatch(setFetchColumnsError(err.message));
+    }
+  };
 
 // export function editColumnTitle(columnId: number, newTitle: string) {
 //   return async (dispatch: DispatchType) => {
@@ -153,19 +113,5 @@ export const fetchColumnsThunk =
 //     } catch (error) {
 //       console.log(error);
 //     }
-//   };
-// }
-
-// export const requestDeleteColumnAndFetch = (id:any) => (
-//     dispatch => {
-//       dispatch(deleteColumn(id)).then(column:any => dispatch(setAllColumns()));
-//     }
-//   )
-
-// export function simulateHttpRequest(action: ColumnAction) {
-//   return (dispatch: DispatchType) => {
-//     setTimeout(() => {
-//       dispatch(action);
-//     }, 0);
 //   };
 // }

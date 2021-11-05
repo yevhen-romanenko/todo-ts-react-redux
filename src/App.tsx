@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from 'react';
-import { connect, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 
 import './App.css';
 import { AddNewColumnButton, TodoColumn } from './modules/columns/components';
@@ -8,7 +8,7 @@ import { IColumn, ITask } from './shared/interfaces';
 import { fetchColumnsThunk } from './store/columns';
 import { fetchTasksThunk } from './store/tasks';
 import store from './store';
-import { useEffectOnce } from './hooks/useEffectOnce';
+// import { useEffectOnce } from './hooks/useEffectOnce';
 
 interface IColumnProps {
   columns: IColumn[];
@@ -16,6 +16,7 @@ interface IColumnProps {
 }
 
 export const App: FC<IColumnProps> = (props) => {
+  // const dispatch = useDispatch();
   useEffect(() => {
     store.subscribe(() => {
       console.log(store.getState());
@@ -26,8 +27,8 @@ export const App: FC<IColumnProps> = (props) => {
   }, []);
 
   // useEffectOnce(() => {
-  //   store.dispatch(fetchColumnsThunk() as any);
-  //   store.dispatch(fetchTasksThunk() as any);
+  //   dispatch(fetchColumnsThunk() as any);
+  //   dispatch(fetchTasksThunk() as any);
   // });
 
   const { columns, tasks } = props;

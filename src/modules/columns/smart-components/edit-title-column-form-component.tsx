@@ -1,21 +1,20 @@
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import { useDispatch } from 'react-redux';
-// import { editColumnTitle } from '../../../store/columns';
+import { editColumnsTitleThunk } from '../../../store/columns';
 
 interface IProps {
   columnID: number;
   title: string;
-  isEdit: boolean;
+  toggleisEdit: () => void;
 }
 
 export const EditTitleColumnForm: FC<IProps> = ({
   columnID,
   title,
-  isEdit,
+  toggleisEdit,
 }) => {
   const dispatch = useDispatch();
 
-  const [isEditing, setIsEditing] = useState<boolean>(isEdit);
   const [newColumnTitle, setNewColumnTitle] = React.useState<string>(title);
 
   const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -24,8 +23,8 @@ export const EditTitleColumnForm: FC<IProps> = ({
 
   const keyPressHandler = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter') {
-      // dispatch(editColumnTitle(columnID, newColumnTitle));
-      setIsEditing(false);
+      dispatch(editColumnsTitleThunk(columnID, newColumnTitle));
+      toggleisEdit();
     }
   };
 

@@ -1,48 +1,38 @@
 import React, { FC, useState } from 'react';
 import { Button, Card, Icon } from '@material-ui/core';
-import { IColumn } from '../../../shared/interfaces';
 import TextareaAutosize from 'react-textarea-autosize';
-import { addColumn } from '../../../store/columns';
-import { Dispatch } from 'redux';
+import { addColumnsThunk } from '../../../store/columns';
+
 import { useDispatch } from 'react-redux';
 // import { dateParse } from '../../../shared/helpers';
 
-interface IProps {
-  isOpen: boolean;
-}
+type TodoAddColumnFormProps = {
+  toggleAddForm: () => void;
+};
 
-// const addNewColumn = (column: IColumn) => async (dispatch: Dispatch) => {
-//   setTimeout(() => dispatch(addColumn(column) as any), 1000);
-// };
-
-export const AddNewColumnForm: FC<IProps> = ({ isOpen }) => {
+export const AddNewColumnForm: FC<TodoAddColumnFormProps> = ({
+  toggleAddForm,
+}) => {
   const titlePlaceholder = 'Enter column title...';
   const buttonTitle = 'Add column';
 
   const dispatch = useDispatch();
-
   const [columnTitle, setColumnTitle] = useState('');
-  const [isFormOpen, setIsFormOpen] = useState(isOpen);
 
   const handleInputTitleChange = (e: any) => {
     setColumnTitle(e.target.value);
   };
 
   const handleAddColumn = (e: any) => {
-    // const { dispatch } = this.props;
-    // const { title } = this.state;
-
     if (columnTitle) {
-      setIsFormOpen(false);
-
-      // dispatch(addColumn(columnTitle) as any);
-
+      dispatch(addColumnsThunk(columnTitle));
       setColumnTitle('');
+      toggleAddForm();
     }
 
     return;
   };
-  // console.log(isFormOpen);
+
   return (
     <div>
       <Card style={{ minHeight: 85, minWidth: 272, padding: '6px 8px 2px' }}>
@@ -67,7 +57,7 @@ export const AddNewColumnForm: FC<IProps> = ({ isOpen }) => {
           {buttonTitle}
           {''}
         </Button>
-        <div onClick={() => setIsFormOpen(false)}>
+        <div onClick={toggleAddForm}>
           <Icon style={{ marginLeft: 8, cursor: 'pointer' }}>close</Icon>
         </div>
       </div>

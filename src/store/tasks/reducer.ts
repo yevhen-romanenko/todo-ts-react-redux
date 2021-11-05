@@ -10,20 +10,17 @@ export const tasksReducer = (state = initialState, action: TaskActionTypes) => {
       return action.tasks;
 
     case ActionTypes.ADD_TASK:
-      return [action.task, ...state];
+      return [...state];
 
     case ActionTypes.EDIT_TASK:
       return [...state, action.task];
 
     case ActionTypes.DELETE_TASK:
-      //   console.log('del task reducer', action.payload);
-      const id = action.task.id;
+      const id = action.id;
 
       const newTasksState = state.filter((taskItem) => taskItem.id !== id);
       state = newTasksState;
-      return {
-        ...state,
-      };
+      return [...state];
 
     case ActionTypes.SET_FETCHING_TASKS:
       return { ...state, isFetching: true };

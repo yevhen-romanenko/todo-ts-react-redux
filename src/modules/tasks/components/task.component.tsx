@@ -1,14 +1,16 @@
-import React, { FC, useState } from 'react';
-import { Card, CardContent, Typography } from '@material-ui/core';
+import React, { FC } from 'react';
+import { Card, CardContent } from '@material-ui/core';
 import {
   TaskHeaderIsExpired,
   TaskDateLabels,
   TaskDateExpiredLabels,
 } from '../atoms';
 import DeleteIcon from '@mui/icons-material/Delete';
-// import { deleteTaskReq } from '../../../api/tasks';
+
 import { connect, useDispatch } from 'react-redux';
 import { deleteTask } from '../../../store/tasks';
+import { dateParse } from '../../../shared/helpers';
+import { TaskTitleDescIsEditing } from '.';
 
 interface IProps {
   id: number;
@@ -27,43 +29,35 @@ export const TodoTask: FC<IProps> = ({
   dateOfCreate,
   expiredTaskDate,
 }) => {
-  const [isEditing, setIsEditing] = useState(false);
-  //   const [cardTitle, setCardTitle] = useState(title);
-  //   const [cardDesc, setCardDesc] = useState(description);
+  // const [isEditing, setIsEditing] = useState(false);
 
   const dispatch = useDispatch();
 
   const handleDeleteTask = () => {
-    // dispatch(deleteTask(id) as any);
-    console.log('deleted task witd id', id, 'from column #', columnID);
+    dispatch(deleteTask(id));
+  };
+
+  const isExpiredTask = (expiredDate: string) => {
+    const isExpired = expiredDate <= dateParse(new Date());
+    return isExpired;
   };
 
   return (
     <div>
       <Card style={styles.cardContainer}>
         <CardContent>
-          <TaskHeaderIsExpired isExpired={false} />
-          <div
-            style={{
-              marginBottom: 8,
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}>
-            <Typography variant='h5' component='div'>
-              {title}
-            </Typography>
-            <div onClick={handleDeleteTask} style={styles.deleteIcon}>
-              <DeleteIcon></DeleteIcon>
-            </div>
-          </div>
-          <div onClick={() => setIsEditing(true)}>
-            <Typography gutterBottom>{description}</Typography>
-          </div>
-
+          <TaskHeaderIsExpired isExpired={isExpiredTask(expiredTaskDate)} />
+          <TaskTitleDescIsEditing
+            columnID={columnID}
+            taskId={id}
+            title={title}
+            description={description}
+          />
           <TaskDateLabels date={dateOfCreate} />
           <TaskDateExpiredLabels date={expiredTaskDate} />
+          <div onClick={handleDeleteTask} style={styles.deleteIcon}>
+            <DeleteIcon></DeleteIcon>
+          </div>
         </CardContent>
       </Card>
     </div>

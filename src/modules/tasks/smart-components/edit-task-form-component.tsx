@@ -1,22 +1,30 @@
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import { Button, Card, Icon } from '@material-ui/core';
-// import { deleteCard, editCard } from '../actions';
 import TextareaAutosize from 'react-textarea-autosize';
+import { editTaskThunk } from '../../../store/tasks';
+import { useDispatch } from 'react-redux';
 
-interface IProps {
-  id: number;
-  listID: number;
+interface ITaskFormProps {
+  taskId: number;
+  columnID: number;
   title: string;
   description: string;
+  toggleIsTaskEdit: () => void;
 }
 
-export const EditCardForm: FC<IProps> = ({ title, description }) => {
-  const [isEditing, setIsEditing] = useState(false);
-  const [cardTitle, setCardTitle] = useState(title);
-  const [cardDesc, setCardDesc] = useState(description);
+export const EditTaskForm: FC<ITaskFormProps> = ({
+  taskId,
+  columnID,
+  title,
+  description,
+  toggleIsTaskEdit,
+}) => {
+  const dispatch = useDispatch();
+  const [cardTitle, setCardTitle] = React.useState<string>(title);
+  const [cardDesc, setCardDesc] = React.useState<string>(description);
 
   const closeForm = () => {
-    setIsEditing(false);
+    toggleIsTaskEdit();
   };
 
   const handleChangeTitle = (e: any) => {
@@ -29,16 +37,12 @@ export const EditCardForm: FC<IProps> = ({ title, description }) => {
 
   const saveCard = (e: any) => {
     e.preventDefault();
-    // dispatch(editCard(listID, id, cardTitle, cardDesc));
-    setIsEditing(false);
+    dispatch(editTaskThunk(taskId, cardTitle, cardDesc));
+    toggleIsTaskEdit();
   };
 
   const cancelSave = (e: any) => {
     closeForm();
-  };
-
-  const handleDeleteCard = () => {
-    // dispatch(deleteCard(id, listID));
   };
 
   return (

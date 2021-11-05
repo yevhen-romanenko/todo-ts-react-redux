@@ -1,16 +1,14 @@
 import React, { FC, useState } from 'react';
 import { Icon } from '@material-ui/core';
-import { IColumn } from '../../../shared/interfaces';
+
 import { AddNewColumnForm } from '.';
 
-interface IProps {
-  // title: string;
-  // description: string;
-  // column: IColumn;
-}
-
 export const AddNewColumnButton: FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [addColumnForm, setAddColumnForm] = useState(false);
+
+  const toggleAddColumnForm = (): void => {
+    setAddColumnForm(!addColumnForm);
+  };
 
   const buttonText = 'Add new column';
   const buttonTextOpacity = 1;
@@ -20,11 +18,9 @@ export const AddNewColumnButton: FC = () => {
   return (
     <div>
       {' '}
-      {!isOpen ? (
+      {!addColumnForm ? (
         <div
-          onClick={() => {
-            setIsOpen(true);
-          }}
+          onClick={toggleAddColumnForm}
           style={{
             ...styles.openFormButtonGroup,
             opacity: buttonTextOpacity,
@@ -37,7 +33,8 @@ export const AddNewColumnButton: FC = () => {
           </div>
         </div>
       ) : (
-        <AddNewColumnForm isOpen={isOpen}></AddNewColumnForm>
+        <AddNewColumnForm
+          toggleAddForm={toggleAddColumnForm}></AddNewColumnForm>
       )}
     </div>
   );
