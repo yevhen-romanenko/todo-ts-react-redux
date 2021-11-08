@@ -18,7 +18,7 @@ export const App: FC<IColumnProps> = (props) => {
   // const dispatch = useDispatch();
   useEffect(() => {
     store.subscribe(() => {
-      console.log(store.getState());
+      // console.log(store.getState());
     });
 
     store.dispatch(fetchColumnsThunk() as any);

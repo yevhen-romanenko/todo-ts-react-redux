@@ -1,10 +1,6 @@
 import * as ActionTypes from './types';
-// import { ColumnState, ColumnAction } from '.';
 import { IColumn } from '../../shared/interfaces';
 import { ColumnActionTypes } from '.';
-// import { v4 as uuidv4 } from 'uuid';
-// import { convertGuidToInt } from '../../shared/helpers';
-// import { tasksData } from '../../modules/columns/mock';
 
 const initialState: Array<IColumn> = [];
 

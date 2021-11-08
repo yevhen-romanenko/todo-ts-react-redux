@@ -48,6 +48,7 @@ const styles = {
   openFormButtonGroup: {
     display: 'flex',
     alignItems: 'center',
+    justifyContent: 'center',
     cursor: 'pointer',
     borderRadius: 3,
     height: 36,

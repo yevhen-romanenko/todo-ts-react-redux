@@ -75,7 +75,7 @@ const apiTasksStore: any = {
 };
 
 export const fetchTasksReq = () => {
-  console.log('fetchTask request from api');
+  // console.log('fetchTask request from api');
   return {
     statusText: 'Ok',
     status: 200,

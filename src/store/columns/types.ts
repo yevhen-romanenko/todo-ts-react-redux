@@ -1,5 +1,3 @@
-// import { Action } from 'redux';
-
 import { IColumn } from '../../shared/interfaces';
 
 // export type TColumnsActions = {};
@@ -12,10 +10,6 @@ export const EDIT_COLUMN = 'EDIT_COLUMN';
 export const SET_FETCHING_COLUMNS = 'SET_FETCHING_COLUMNS';
 export const SET_FETCH_COLUMNS_SUCCESS = 'SET_FETCH_COLUMNS_SUCCESS';
 export const SET_FETCH_COLUMNS_ERROR = 'SET_FETCH_COLUMNS_ERROR';
-
-// export type ColumnState = {
-//   columnItems: IColumn[];
-// };
 
 export type ColumnApiState = {
   isFetching: boolean;

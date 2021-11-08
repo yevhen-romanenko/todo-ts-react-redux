@@ -43,10 +43,11 @@ export const AddNewColumnButton: FC = () => {
 const styles = {
   openFormButtonGroup: {
     display: 'flex',
+    justifyContent: 'center',
     alignItems: 'center',
     cursor: 'pointer',
     borderRadius: 3,
-    height: 36,
+    height: 50,
     width: 272,
     paddingLeft: 10,
   },

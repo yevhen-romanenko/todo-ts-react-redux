@@ -22,7 +22,7 @@ const apiStore: any = {
 };
 
 export const fetchColumsReq = () => {
-  console.log('fetchColumns request from api');
+  //   console.log('fetchColumns request from api');
   return {
     statusText: 'Ok',
     status: 200,
