@@ -2,6 +2,7 @@ import { IColumn } from '../../shared/interfaces';
 import {
   addColumnReq,
   fetchColumsReq,
+  swapColumnPositionReq,
   updateColumnReq,
 } from '../../api/columns';
 
@@ -15,6 +16,7 @@ import {
   SET_FETCHING_COLUMNS,
   SET_FETCH_COLUMNS_ERROR,
   SET_FETCH_COLUMNS_SUCCESS,
+  SWAP_COLUMN,
 } from '.';
 
 export const addColumn = (column: IColumn): ColumnActionTypes => ({
@@ -30,6 +32,11 @@ export const editColumn = (column: IColumn): ColumnActionTypes => ({
 export const deleteColumn = (columnID: number): ColumnActionTypes => ({
   type: DELETE_COLUMN,
   id: columnID,
+});
+
+export const swapColumns = (columns: IColumn[]): ColumnActionTypes => ({
+  type: SWAP_COLUMN,
+  columns,
 });
 
 export const setColumns = (columns: IColumn[]): ColumnActionTypes => ({
@@ -83,35 +90,14 @@ export const editColumnsTitleThunk =
     }
   };
 
-// export function editColumnTitle(columnId: number, newTitle: string) {
-//   return async (dispatch: DispatchType) => {
-//     try {
-//       dispatch({
-//         type: ActionTypes.EDIT_COLUMN_TITLE,
-//         payload: { columnId, newTitle },
-//       });
+export const changeColumnPositionThunk =
+  (columnId: number, direction: number) =>
+  async (dispatch: Dispatch<ColumnActionTypes>) => {
+    try {
+      const response = await swapColumnPositionReq(columnId, direction);
 
-//       const response = await updateColumnReq(columnId, newTitle);
-//       console.log(response.data);
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
-// }
-
-// export function changeColumnPosition(columnId: number, direction: number) {
-//   return async (dispatch: DispatchType) => {
-//     try {
-//       dispatch({
-//         type: ActionTypes.MOVE_COLUMN,
-//         payload: { columnId, direction },
-//       });
-
-//       const response = await swapColumnPositionReq(columnId, direction);
-//       console.log('SwapColumnPositionReqfromAction', response);
-//       console.log(response.data);
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
-// }
+      dispatch(swapColumns(response.data));
+    } catch (err: any) {
+      dispatch(setFetchColumnsError(err.message));
+    }
+  };

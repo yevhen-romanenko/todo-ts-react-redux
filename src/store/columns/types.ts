@@ -5,7 +5,7 @@ import { IColumn } from '../../shared/interfaces';
 // export type TColumnsActions = {};
 export const SET_COLUMNS = 'SET_COLUMNS';
 export const ADD_COLUMN = 'ADD_COLUMN';
-export const MOVE_COLUMN = 'MOVE_COLUMN';
+export const SWAP_COLUMN = 'SWAP_COLUMN';
 export const DELETE_COLUMN = 'DELETE_COLUMN';
 export const EDIT_COLUMN = 'EDIT_COLUMN';
 
@@ -37,6 +37,11 @@ export type DeleteColumnAction = {
   id: number;
 };
 
+export type SwapColumnPositionAction = {
+  type: typeof SWAP_COLUMN;
+  columns: Array<IColumn>;
+};
+
 export type SetColumnsAction = {
   type: typeof SET_COLUMNS;
   columns: Array<IColumn>;
@@ -60,6 +65,7 @@ export type ColumnActionTypes =
   | EditColumnAction
   | DeleteColumnAction
   | AddColumnAction
+  | SwapColumnPositionAction
   | SetFetchingColumnsAction
   | SetFetchColumnsSuccessAction
   | SetFetchColumnsErrorAction;

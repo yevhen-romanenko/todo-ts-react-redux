@@ -5,7 +5,11 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { ColumnTitleIsEditing } from '../atoms';
 import { AddNewTaskButton, TodoTask } from '../../tasks/components';
-import { deleteColumn, fetchColumnsThunk } from '../../../store/columns';
+import {
+  changeColumnPositionThunk,
+  deleteColumn,
+  fetchColumnsThunk,
+} from '../../../store/columns';
 import { ITask } from '../../../shared/interfaces';
 
 import { useDispatch, connect } from 'react-redux';
@@ -40,12 +44,12 @@ export const TodoColumn: FC<ITodoColumnProps> = ({
   const handleDeleteColumn = () => {
     dispatch(deleteColumn(columnID));
   };
-  const handleMoveLeft = (direction: any) => {
-    // dispatch(changeColumnPosition(columnID, DIRECTION_LEFT));
+  const handleMoveLeft = () => {
+    dispatch(changeColumnPositionThunk(columnID, DIRECTION_LEFT));
   };
 
-  const handleMoveRight = (direction: any) => {
-    // dispatch(changeColumnPosition(columnID, DIRECTION_RIGHT));
+  const handleMoveRight = () => {
+    dispatch(changeColumnPositionThunk(columnID, DIRECTION_RIGHT));
   };
 
   return (

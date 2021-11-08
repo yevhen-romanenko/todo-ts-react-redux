@@ -5,6 +5,6 @@ export const dateParse = (expiredTaskDate: Date) => {
     (expiredTaskDate.getMonth() + 1) +
     '/' +
     expiredTaskDate.getDate();
-  // expiredTaskDate = dedLineDateParse;
+
   return dedLineDateParse;
 };

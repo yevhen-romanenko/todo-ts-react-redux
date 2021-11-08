@@ -8,7 +8,6 @@ import { IColumn, ITask } from './shared/interfaces';
 import { fetchColumnsThunk } from './store/columns';
 import { fetchTasksThunk } from './store/tasks';
 import store from './store';
-// import { useEffectOnce } from './hooks/useEffectOnce';
 
 interface IColumnProps {
   columns: IColumn[];
@@ -26,14 +25,7 @@ export const App: FC<IColumnProps> = (props) => {
     store.dispatch(fetchTasksThunk() as any);
   }, []);
 
-  // useEffectOnce(() => {
-  //   dispatch(fetchColumnsThunk() as any);
-  //   dispatch(fetchTasksThunk() as any);
-  // });
-
   const { columns, tasks } = props;
-  console.log('columns = ', columns);
-  console.log('tasks =', tasks);
 
   // const columns: Array<IColumn> = useSelector((state: any) => state.columns);
   // const tasks: Array<ITask> = useSelector((state: any) => state.tasks);

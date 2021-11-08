@@ -29,6 +29,10 @@ export const columnsReducer = (
       );
       state = newColumnsState;
       return [...state];
+
+    case ActionTypes.SWAP_COLUMN:
+      return [...state, action.columns];
+
     case ActionTypes.SET_FETCHING_COLUMNS:
       return { ...state, isFetching: true };
 

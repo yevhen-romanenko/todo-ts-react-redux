@@ -1,6 +1,5 @@
 import React, { FC, useState } from 'react';
 import { Icon } from '@material-ui/core';
-// import { IColumn } from '../../../shared/interfaces';
 import { AddNewTaskForm } from '.';
 
 interface IProps {

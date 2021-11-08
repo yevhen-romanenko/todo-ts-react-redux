@@ -29,8 +29,6 @@ export const TodoTask: FC<IProps> = ({
   dateOfCreate,
   expiredTaskDate,
 }) => {
-  // const [isEditing, setIsEditing] = useState(false);
-
   const dispatch = useDispatch();
 
   const handleDeleteTask = () => {

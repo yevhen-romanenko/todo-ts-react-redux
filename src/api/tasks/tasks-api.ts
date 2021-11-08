@@ -1,6 +1,3 @@
-// import { IColumn } from '../../shared/interfaces';
-// import { AxiosResponse } from 'axios';
-
 import { v4 as uuidv4 } from 'uuid';
 import { convertGuidToInt } from '../../shared/helpers';
 import { dateCreate } from '../../shared/helpers';
